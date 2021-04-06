@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void linearSearch(int *a,int ele,int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        if(a[i]==ele)
+        {
+            printf("The element found at position %d",i);
+            return;
+        }
+        
+    }
+    
+    printf("The element is not found\n");
+}
+int main()
+{
+    int *a,n,i,ele;
+    printf("Enter the size of the array\n");
+    scanf("%d",&n);
+    a=(int*)malloc(sizeof(int));
+    printf("Enter the elements\n");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("Enter the element to be searched\n");
+    scanf("%d",&ele);
+    linearSearch(a,ele,n);
+    
+}

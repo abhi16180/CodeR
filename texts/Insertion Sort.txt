@@ -1,0 +1,42 @@
+#include<stdio.h>
+
+void insort(int *a,int n)
+{
+    
+    int j,ele;
+    for (int i = 1; i < n; i++) {
+        ele= a[i];
+        j = i - 1;
+        while (j >= 0 && a[j] > ele) {
+            a[j + 1] = a[j];
+            j = j - 1;
+        }
+        a[j + 1] =ele;
+    }
+}
+
+void disp(int *a,int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+}
+
+int main()
+{
+    int n,a[100],i;
+    printf("Enter the size of array\n");
+    scanf("%d",&n);
+    printf("Enter the array elements\n");
+    for(i=0;i<n;i++)
+    scanf("%d",&a[i]);
+    printf("Array before sorting\n");
+    disp(a,n);
+    insort(a,n);
+    printf("Array after sorting\n");
+    disp(a,n);
+    return 0;
+    
+}

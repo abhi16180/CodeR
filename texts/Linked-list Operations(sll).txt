@@ -1,0 +1,197 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+struct node
+{
+  int data;
+  struct node *next;
+};
+//insert beginning
+void insert(struct node **head,int data)
+{
+  struct node *newnode=(struct node*)malloc(sizeof(struct node));
+  newnode->data=data;
+  newnode->next=*head;
+  *head=newnode;
+  
+}
+
+//append
+
+void append(struct node **head,int data)
+{
+  struct node *newnode=(struct node*)malloc(sizeof(struct node));
+  newnode->data=data;
+  newnode->next=NULL;
+  if(*head==NULL)
+  {
+    *head=newnode;
+    return;
+  }
+
+  struct node *temp=*head;
+  while(temp->next!=NULL)
+  {
+    temp=temp->next;
+  }
+
+
+  temp->next=newnode;
+
+}
+//insert before
+void before(struct node **head,int data,int before)
+{
+  struct node *newnode=(struct node*)malloc(sizeof(struct node));
+  newnode->data=data;
+  int flag=0;
+  struct node *temp=*head;
+  while(temp!=NULL)
+  {
+    if(temp->data==before)
+    {
+      flag=1;
+    }
+    temp=temp->next;
+  }
+
+  if(flag==1)
+  {
+
+    temp=*head;
+    if(temp->data==before)
+    {
+      newnode->next=*head;
+      *head=newnode;
+      return;
+    }
+    struct node *prev=NULL;
+    while(temp->data!=before)
+    {
+      prev=temp;
+      temp=temp->next;
+    }
+
+    prev->next=newnode;
+    newnode->next=temp;
+  }
+}
+//delete beg
+void deleteBeg(struct node **head)
+{
+  struct node *temp=*head;
+  if(*head!=NULL)
+  {
+  *head=(*head)->next;
+  free(temp);
+  }
+  else{
+    printf("Empty so cant delete\n");
+  }
+}
+//delete end
+void deleteEnd(struct node**head)
+{
+  struct node *temp = *head, *prev = NULL;
+  if (*head == NULL)
+  {
+    printf("Empty");
+  }
+  else if ((*head)->next == NULL)
+  {
+    *head = (*head)->next;
+    free(temp);
+  }
+  else
+  {
+
+    while (temp->next != NULL)
+    {
+      prev = temp;
+      temp = temp->next;
+    }
+
+    prev->next = NULL;
+    free(temp);
+  }
+}
+
+
+//ReverseList
+
+void reverseList(struct node**head)
+{
+  struct node *currentNode=*head,*prev=NULL,*next=NULL;
+
+  while(currentNode!=NULL)
+  {
+    next=currentNode->next;
+    currentNode->next=prev;
+    prev=currentNode;
+    currentNode=next;
+  }
+  *head=prev;
+}
+//display
+void display(struct node *head)
+{
+  struct node *temp=head;
+  if(temp==NULL)
+  {
+    printf("Empty list\n");
+  }
+  else
+  {
+    while(temp!=NULL)
+    {
+      printf("%d ",temp->data);
+      temp=temp->next;
+    }
+  }
+}
+
+
+int main()
+{
+  struct node *head=NULL;
+  int value,ch,benode,node;
+  char choice[5];
+  do
+  {
+    /* code */
+    printf("1.Insert beg\n2.Insert end\n3.Insert before\n4.Reverse\n5.Delete_beg\n6.Delete_end\n7.Display\n");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+      case 1:printf("Enter the element to be inserted\n");
+             scanf("%d",&value);
+             insert(&head,value);
+             break;
+      case 2:printf("Enter the ele\n");scanf("%d",&value);
+             append(&head,value);
+             break;
+      case 3:printf("ENter the ele");
+             scanf("%d",&value);
+             printf("Enter before node\n");
+             scanf("%d",&benode);
+             before(&head,value,benode);break;
+      case 4:reverseList(&head);
+             printf("ReversedLIst is\n");
+             display(head);
+             break;
+      case 5:deleteBeg(&head);break;
+      case 6:deleteEnd(&head);break;
+      case 7:display(head);
+             break;
+      default:printf("Enter proper choice\n");
+              break;
+
+    }
+
+    printf("Do you want to continue?yes/no\n");
+    scanf("%s",choice);
+    
+  } while (!strcmp(choice,"yes"));
+  
+}

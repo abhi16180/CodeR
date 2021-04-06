@@ -1,0 +1,34 @@
+#include<stdio.h>
+
+void interpol(int low,int high,int *a,int ele)
+{
+    int pos;
+  if (low <= high && ele >= a[low] && ele <= a[high]) {
+        pos = low+(((double)(high - low) / (a[high] - a[low])* (ele - a[low])));
+        if (a[pos] == ele)
+           { 
+            printf("Element is found at index %d",pos);
+            return;
+           }
+        if (ele>a[pos])
+        interpol(pos+1,high,a,ele);
+        if (ele<a[pos])
+            return interpol(low,pos-1,a,ele);
+    }
+    printf("Element is not found\n");
+    
+}
+int main()
+{
+    int n,a[100],ele,i;
+    printf("Enter the size of array\n");
+    scanf("%d",&n);
+    printf("Enter the array elements\n");
+    for(i=0;i<n;i++)
+    scanf("%d",&a[i]);
+    printf("Enter the search element\n");
+    scanf("%d",&ele);
+    interpol(0,n-1,a,ele);
+    return 0;
+    
+}

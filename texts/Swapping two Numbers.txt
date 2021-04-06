@@ -1,0 +1,24 @@
+#include<stdio.h>
+#include<stdlib.h>
+void swap(int *a,int *b);
+
+int main()
+{
+int a,b;
+printf("Enter the value of a\n");
+scanf("%d",&a);
+printf("Enter the value of b\n");
+scanf("%d",&b);
+printf("Before sorting a=%d and b=%d\n",a,b);
+swap(&a,&b);
+printf("After sorting a=%d and b=%d\n",a,b);
+return 0;
+
+}
+
+void swap(int *a,int *b){
+//swapping without using third variable
+*a=*a+*b;
+*b=*a-*b;
+*a=*a-*b;
+}

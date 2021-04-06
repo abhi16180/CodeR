@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct tree
+{
+    int data;
+    struct tree *left,*right;
+};
+
+struct tree* insert(struct tree *root,int value)
+{
+    if(root==NULL)
+    {
+        root=(struct tree*)malloc(sizeof(struct tree));
+        root->data=value;
+        root->left=NULL;
+        root->right=NULL;
+        
+    }
+    else
+    {
+        if(value<=root->data)
+        {
+            root->left=insert(root->left,value);
+        }
+        else
+        {
+            root->right=insert(root->right,value);
+        }
+        return root;
+    }
+}
+
+void preorder(struct tree *root)
+{
+    if(root!=NULL)
+    {
+        printf("%d ",root->data);
+        preorder(root->left);
+        preorder(root->right);
+    }
+    else
+    return;
+}
+
+int main()
+{
+    struct tree *root=NULL;
+    int value;
+    char choice[10];
+    do
+    {
+        printf("Enter the value to be inserted \n");
+        scanf("%d",&value);
+        root=insert(root,value);
+        printf("Do you want to insert anothe node?Type yes/no\n");
+        scanf("%s",choice);
+    }while(!strcmp(choice,"yes"));
+    
+    printf("Preorder traversal\n");
+    preorder(root);
+    return 0;
+}

@@ -1,0 +1,22 @@
+//reading and printing array elements using pointer
+#include <stdio.h>
+#include<stdio.h>
+int main() {
+    
+    int *a,size,index;
+    printf("Enter the size of the array\n");
+    scanf("%d",&size);
+    a=(int*)malloc(size*sizeof(int));
+    printf("Enter the array elements\n");
+    for(index=0;index<size;index++)
+    {
+        scanf("%d",(a+index));
+    }
+    printf("Array elements are\n");
+    for(index=0;index<size;index++){
+        printf("%d ",*(a+index));
+    }
+    return 0;
+    
+
+}

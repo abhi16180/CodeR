@@ -1,0 +1,142 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+
+struct node
+{
+    int key,marker,age;
+    char name[20];
+};
+
+
+void insertInHash(int key,char *name,int age,struct node *hashtable,int tableSize,int *totEle)
+{ int index;
+    if(*totEle<=tableSize)
+    {//linear probing
+        for(int i=0;i<=tableSize;i++)
+        {
+             index=(key+i)%tableSize;
+            if(hashtable[index].marker!=1)  //if element is not present at that "index"                               
+            {
+            hashtable[index].age=age;
+            hashtable[index].key=key;
+            strcpy(hashtable[index].name,name);
+            hashtable[index].marker=1;
+            *totEle+=1;
+            return; 
+            }
+           //if element is already there at "index" increment i;
+           
+
+        }
+    }
+}
+
+
+void display(struct node *hashtable,int tablesize,int totele)
+{
+    if(totele!=0)
+    {
+        for(int i=0;i<=tablesize;i++)
+        {
+            if(hashtable[i].marker==1)
+            {
+            printf("VOTER ID %d\n",hashtable[i].key);
+            printf("AGE %d\n",hashtable[i].age);
+            printf("NAME %s\n",hashtable[i].name);
+            }
+
+        }
+    }
+}
+
+
+void deleteFromHash(int key,struct node *hashtable,int tablesize,int *totele)
+{
+	int index;
+	if(*totele==0)
+	{
+		printf("Nothin to delete\n");
+	}
+	else
+	{
+		for(int i=0;i<=tablesize;i++)
+		{ 
+			index=(key+i)%tablesize;
+			if(hashtable[index].key==key)
+			{
+				hashtable[index].marker=0;
+				*totele-=1;
+				return;
+			}
+		}
+	}
+}
+
+void searchElement(int key,struct node *hashtable,int tablesize,int totele)
+{
+	
+	if(totele!=0)
+	{
+		for(int i=0;i<=tablesize;i++)
+		{
+			
+			if(hashtable[i].key==key)
+			{
+				printf("VOTE ID %d",hashtable[i].key);
+				printf("NAME %s",hashtable[i].name);
+				printf("AGE %d",hashtable[i].age);
+				return;
+			}
+		}
+	}
+}
+
+int main() {
+	int tableSize = 0, totEle = 0;
+	struct node *hashTable = NULL;
+	int key, age, ch;
+	char name[100];
+	printf("Enter the Table Size:\n");
+	scanf("%d", &tableSize);
+	hashTable = (struct node *)calloc(tableSize, sizeof(struct node));
+	while (1) {
+		printf("1. Insert\n2. Delete\n");
+		printf("3. Search\n4. Display\n");
+		printf("5. Exit\nEnter your choice:\n");
+		scanf("%d", &ch);
+		switch (ch) {
+			case 1:
+				printf("Enter the key value:\n");
+				scanf("%d", &key);
+				getchar();
+				printf("Enter the Name:\n");
+				fgets(name, 100, stdin);
+				name[strlen(name) - 1] = '\0';
+				printf("Enter the Age:\n");
+				scanf("%d", &age);
+				insertInHash(key, name, age,hashTable,tableSize,&totEle);
+				break;
+			case 2:
+				printf("Enter the key value:\n");
+				scanf("%d", &key);
+				deleteFromHash(key,hashTable,tableSize,&totEle);
+				break;
+			case 3:
+				printf("Enter the key value:\n");
+				scanf("%d", &key);
+				searchElement(key,hashTable,tableSize,totEle);
+				break;
+			case 4:
+				display(hashTable,tableSize,totEle);
+				break;
+			case 5:
+				exit(0);
+			default:
+				printf("Invalid option\n");
+				break;
+		}
+	}
+	return 0;
+}
