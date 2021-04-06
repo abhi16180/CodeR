@@ -1,6 +1,6 @@
 # CodeR
 
-A new Flutter project.
+A simple flutter app to learn basic C programs.
 
 ## Getting Started
 
